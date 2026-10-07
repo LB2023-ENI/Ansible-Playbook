@@ -1,4 +1,4 @@
-- - -
+---
 - name: TP6
   hosts: all
   become:  true
@@ -24,6 +24,6 @@
         update_cache: yes
     - name: Démarrage du service bind.
       service:
-        name: bind
+        name: named
         state: started
         enabled: yes
