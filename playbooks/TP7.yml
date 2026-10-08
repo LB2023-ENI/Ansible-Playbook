@@ -5,3 +5,4 @@
 
   roles:
     - role: serveur_dns
+    - role: utilisateur_administration

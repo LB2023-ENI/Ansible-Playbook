@@ -1,0 +1,30 @@
+---
+# tasks file for roles/utilisateur_administration
+- name: Générer un mot de passe aléatoire sécurisé
+  ansible.builtin.set_fact:
+    generated_admin_password: "{{ lookup('ansible.builtin.password', '/dev/null length=' ~ 25 ~ ' chars=ascii_letters,digits,hexdigest') }}"
+    no_log: true
+- name: Création utilisateur
+  ansible.builtin.user:
+    name: "{{ UserName }}"
+    password: "{{ generated_admin_password | password_hash }}"
+    shell: /bin/bash
+- name: Ajout des droits SUDO
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/{{ UserName }}
+    line: '{{ UserName }} ALL=(ALL) ALL'
+    owner: root
+    group: root
+    mode: '0600'
+    create: true
+- name: Ajout de la clé SSH publique dans le Home de l'utilisateur créé.
+  ansible.builtin.lineinfile:
+    path: /home/{{ UserName }}/.ssh/authorized_keys
+    line: "{{ Cle_Publique_SSH }}"
+    owner: "{{ UserName }}"
+    group: "{{ UserName }}"
+    mode: '0600'
+    create: true
+- name: Affichage du mot de passe de l'utilisateur créé.
+  ansible.builtin.debug:
+    msg: "Le mot de passe de l'utilisateur créé est {{ generated_admin_password }}"

@@ -1,0 +1,1 @@
+Cle_Publique_SSH: "{{ VAULT_Cle_Publique_SSH }}"

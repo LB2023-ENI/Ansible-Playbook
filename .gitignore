@@ -2,6 +2,7 @@
 # 1. SECU et SECRETS
 # Fichiers de mots de passe Ansible Vault (NE JAMAIS COMMITTER)
 *.vault
+*.vault*
 # Fichiers d'environnement et secrets génériques
 .env
 *.env
