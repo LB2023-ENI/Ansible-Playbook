@@ -1,0 +1,11 @@
+---
+- name: Bonus
+  hosts: W11
+  tasks:
+    - name: Création de l'utilisateur ansible
+      ansible.windows.win_user:
+        name: ansible
+        password: iop123!
+        state: present
+        groups:
+          - Administrateurs

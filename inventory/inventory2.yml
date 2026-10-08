@@ -1,0 +1,17 @@
+all:
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  children:
+    Staging:
+      hosts:
+        192.168.64.129:
+    Prod:
+      hosts:
+        192.168.64.130:
+    W11:
+      vars:
+        ansible_user: Administrateur
+        ansible_connection: ssh
+        ansible_shell_type: powershell
+      hosts:
+        192.168.64.131:
