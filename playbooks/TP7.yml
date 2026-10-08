@@ -1,0 +1,7 @@
+---
+- name: TP7
+  hosts: all
+  become:  true
+
+  roles:
+    - role: serveur_dns

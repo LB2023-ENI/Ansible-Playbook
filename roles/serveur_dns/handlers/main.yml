@@ -1,0 +1,6 @@
+---
+# handlers file for roles/serveur_dns
+- name: Redémarrage de bind
+  ansible.builtin.service:
+    name: named
+    state: restarted

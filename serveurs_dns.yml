@@ -1,0 +1,4 @@
+---
+- name: TP7
+  ansible.builtin.import_playbook: playbooks/TP7.yml
+    

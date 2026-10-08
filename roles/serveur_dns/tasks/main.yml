@@ -1,0 +1,42 @@
+---
+# tasks file for roles/serveur_dns
+- name: Sécurisation de la connexion ssh de l'utilisateur ansible depuis uniquement l'utilisateur ansible venant de SRV-Ansible et neutralisation de la connexion ssh par mdp sur cet utilisateur.
+  ansible.builtin.blockinfile:
+    path: /etc/ssh/sshd_config
+    append_newline: true
+    prepend_newline: true
+    block: |
+      Match User ansible
+      AllowUsers ansible@192.168.64.128
+      PasswordAuthentication no
+- name: Neutralisation de la connexion par mot de passe de l'utilsateur ansible.
+  ansible.builtin.user:
+    name: ansible
+    password_lock: true
+- name: Installation du service bind.
+  ansible.builtin.dnf:
+    name: bind
+    state: latest
+    update_cache: yes
+- name: Démarrage du service bind.
+  ansible.builtin.service:
+    name: named
+    state: started
+    enabled: yes
+- name: Bloc de remplacement de la configuration globale de bind.
+  block:
+    - name: Specifications pour le service bind.
+      ansible.builtin.template:
+        src: named.conf.j2
+        dest: /etc/named.conf
+        owner: root
+        group: named
+        mode: '0640'
+        backup: yes
+        validate: /usr/sbin/named-checkconf %s
+      notify:
+        - Redémarrage de bind
+  rescue:
+    - name: "[Rollback] Interruption du playbook."
+      ansible.builtin.fail:
+        msg: "Erreur détectée lors de la configuration Bind. Le fichier de configuration globale n'a pas été remplacée."
