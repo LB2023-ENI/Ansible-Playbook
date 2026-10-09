@@ -11,8 +11,10 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - name: Récupération des playbooks ansible.
-        uses: actions/checkout@main
+      - name: Check the file and location.
+        run: |
+          ls -la
+          pwd
 
       - name: Execute le playbook ansible sur le Staging.
         run: ansible-playbook serveur_dns.yml
