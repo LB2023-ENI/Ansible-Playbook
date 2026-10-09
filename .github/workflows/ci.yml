@@ -11,13 +11,8 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - name: Check the file and location.
-        run: |
-          ls -la
-          pwd
-
       - name: Execute le playbook ansible sur le Staging.
-        run: ansible-playbook serveur_dns.yml
+        run: ansible-playbook ./serveur_dns.yml
 
       - name: Execute le playbook ansible sur la Prod.
-        run: ansible-playbook -i inventory/prod serveurs_dns.yml
+        run: ansible-playbook -i inventory/prod ./serveurs_dns.yml
