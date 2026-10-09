@@ -12,7 +12,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Récupération des playbooks ansible.
-        uses: actions/checkout@\${{ github.sha }}
+        uses: actions/checkout@${{ github.sha }}
 
       - name: Execute le playbook ansible sur le Staging.
         run: ansible-playbook serveur_dns.yml
