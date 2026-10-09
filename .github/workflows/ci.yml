@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: SRV-Ansible
+    runs-on: self-hosted
     steps:
       - name: Execute le playbook ansible sur le Staging.
         run: ansible-playbook serveur_dns.yml
